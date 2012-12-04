@@ -1,5 +1,13 @@
+<?php 
+	$regionslist = "";
+	foreach($regions as $row):?>
+    			
+    			
+    			<?php $regionslist = $regionslist."'".$row->region_id."':'".$row->region_name."', ";?>
+    			
+    			<?php endforeach;?>
 <?php  foreach($address as $addressdetail): ?>	
-<script>
+<script type="text/javascript">
 $(document).ready(function() {
 	var uid = "<?=$address_id?>";
     $(".editaddress").editable("<?=site_url('/members/edit_address')?>", 
@@ -19,7 +27,7 @@ $(document).ready(function() {
 
     $(".regionedit").editable("<?=site_url('/members/edit_address')?>", 
     	    {
-    		data   : "{'1':'Other','2':'Europe','3':'North America','4':'Asia/Pacific','5':'South America','6':'Middle East','selected':'<?php echo $addressdetail->region;?>'}",
+    		data   : "{<?=$regionslist?> 'selected':'<?php echo $addressdetail->region;?>'}",
      	    type   : "select",
      	    onblur : "submit",
      	    style  : "inherit",
@@ -37,6 +45,8 @@ $(document).ready(function() {
 		
 	<div>
 	
+    			
+    			
 		
 <table width="260px">
 <tr>
@@ -181,7 +191,7 @@ $(document).ready(function() {
 
 
 </table>
-		<?php endforeach ?>
+		<?php endforeach; ?>
 	
 
 		

@@ -417,6 +417,14 @@ class Companies_model extends Model {
         $Q->free_result();
         return $data;
     }
+	
+	function list_regions() {
+		$this -> db -> order_by('order');
+		$query = $this -> db -> get('regions');
+		if ($query -> num_rows > 0) {
+			return $query -> result();
+		}
+	}
 
     /**
      *

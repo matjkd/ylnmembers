@@ -72,7 +72,7 @@ class Members extends MY_Controller {
         }
 
 
-
+		$data['regions'] = $this->companies_model->list_regions();
         $data['main'] = '/user/logged_in_area';
         $data['grid'] = '/members/companygrid';
 
@@ -173,7 +173,7 @@ class Members extends MY_Controller {
     function view_address() {
         $segment_active = $this->uri->segment(3);
         $data['address'] = $this->companies_model->get_address($segment_active);
-
+$data['regions'] = $this->companies_model->list_regions();
         $data['companies'] = $this->companies_model->list_companies();
         $data['address_id'] = $segment_active;
         $data['main'] = '/user/logged_in_area';
