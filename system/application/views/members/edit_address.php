@@ -1,11 +1,14 @@
 <?php 
 	$regionslist = "";
+	
+	
+	
 	foreach($regions as $row):?>
     			
     			
     			<?php $regionslist = $regionslist."'".$row->region_id."':'".$row->region_name."', ";?>
     			
-    			<?php endforeach;?>
+  <?php endforeach; ?>
 <?php  foreach($address as $addressdetail): ?>	
 <script type="text/javascript">
 $(document).ready(function() {
@@ -128,7 +131,7 @@ $(document).ready(function() {
 	
 	<tr>
 		<td class='leftcolumn'>
-	City
+	City (important)
 		</td>
 		<td>
 		 <div class='editaddress' id='city'><?=$addressdetail->city?></div>

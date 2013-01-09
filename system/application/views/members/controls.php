@@ -87,7 +87,7 @@
 <?php 
 if($company_id == 0)
 {
-	echo '<button id="add_company">Add Company</button>';
+	echo '<button id="add_company">Add Company</button> <button id="add_city">Add City</button>';
 }
 else
 {

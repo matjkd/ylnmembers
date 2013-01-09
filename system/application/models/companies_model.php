@@ -169,6 +169,20 @@ class Companies_model extends Model {
         $query->free_result();
         return $data;
     }
+	
+	function get_city($id) {
+		$this->db->from('mydb_cities');
+		$this->db->where('city_id', $id);
+		 $query = $this->db->get();
+        if ($query->num_rows == 1) {
+            foreach ($query->result_array() as $row)
+                $data[] = $row;
+        } else {
+            $data = NULL;
+        }
+        $query->free_result();
+        return $data;
+	}
 
     /**
      *
@@ -314,6 +328,16 @@ class Companies_model extends Model {
             return $data->result();
         }
     }
+	
+	function add_city() {
+		$city = array(
+		'city_name' => $this->input->post('city_name')
+		);
+		
+		$this->db->insert('mydb_cities', $city);
+		
+		return;
+	}
 
     /**
      *
@@ -419,7 +443,7 @@ class Companies_model extends Model {
     }
 	
 	function list_regions() {
-		$this -> db -> order_by('order');
+		$this -> db -> order_by('region_name', 'asc');
 		$query = $this -> db -> get('regions');
 		if ($query -> num_rows > 0) {
 			return $query -> result();

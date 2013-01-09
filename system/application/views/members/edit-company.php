@@ -41,7 +41,7 @@
 	<?php }
 	?>
 		
-
+<?=$this->load->view('popups/popup_city')?>
 <?=$this->load->view('popups/popup_company')?>
 <?=$this->load->view('popups/popup_address')?>
 <?=$this->load->view('popups/popup_employee')?>

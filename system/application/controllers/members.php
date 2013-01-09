@@ -95,6 +95,35 @@ class Members extends MY_Controller {
 
         //get list of all users
         $data['users'] = $this->users_model->list_users();
+		  $data['userlevel'] = $is_logged_in = $this->session->userdata('user_level');
+
+        $segment_active = $this->uri->segment(3);
+        if ($segment_active != NULL) {
+            $data['company_id'] = $this->uri->segment(3);
+            $data['next_record'] = $this->companies_model->next_company($data['company_id']);
+            $data['previous_record'] = $this->companies_model->previous_company($data['company_id']);
+        } else {
+            $data['company_id'] = 0;
+        }
+        $id = $data['company_id'];
+
+        $data['companies'] = $this->companies_model->list_companies();
+        $data['company'] = $this->companies_model->get_company($id);
+
+        $data['employees1'] = $this->companies_model->get_employees($id);
+        if ($data['employees1'] == NULL) {
+            $data['employees'] = "no";
+        } else {
+            $data['employees'] = $this->companies_model->get_employees($id);
+        }
+
+
+        $data['addresses1'] = $this->companies_model->get_addresses($id);
+        if ($data['addresses1'] == NULL) {
+            $data['addresses'] = "no";
+        } else {
+            $data['addresses'] = $this->companies_model->get_addresses($id);
+        }
 
         $data['company_id'] = NULL;
         $data['main'] = '/user/logged_in_area';
@@ -103,6 +132,19 @@ class Members extends MY_Controller {
         $this->load->vars($data);
         $this->load->view('main_template');
     }
+	
+	function cities() {
+		
+		 //get list of all cities
+        $data['cities'] = $this->users_model->list_cities();
+
+        $data['company_id'] = NULL;
+        $data['main'] = '/user/logged_in_area';
+        $data['grid'] = '/members/grids/citygrid';
+        $data['body'] = '/users/top';
+        $this->load->vars($data);
+        $this->load->view('main_template');
+	}
 
     /**
      *
@@ -182,6 +224,17 @@ $data['regions'] = $this->companies_model->list_regions();
         $this->load->vars($data);
         $this->load->view('/members/edit_address');
     }
+	
+	
+	function view_city($id) {
+		
+$data['city'] = $this->companies_model->get_city($id);		
+ $data['main'] = '/user/logged_in_area';
+  $data['body'] = '/admin/edit_city';
+		 $this->load->vars($data);
+        $this->load->view('main_template');
+		
+	}
 
     /**
      * 
@@ -334,6 +387,30 @@ $data['regions'] = $this->companies_model->list_regions();
         }
     }
 
+function create_city() {
+	 // field name, error message, validation rules
+        $this->form_validation->set_rules('city_name', 'city_name', 'trim|required');
+		  if ($this->form_validation->run() == FALSE) {
+
+            $errors = validation_errors();
+            $this->session->set_flashdata('message', 'There was a problem...');
+            redirect('members/cities/');
+        } else {
+
+            if ($query = $this->companies_model->add_city()) {
+
+                foreach ($query as $resultdata) {
+                    $cityid = mysql_insert_id();
+
+                  
+                    //$this->companies_model->add_employee($companyid);
+                    redirect('members/viewcity/' . $cityid . '');
+                }
+            } else {
+                redirect('members/cities/');
+            }
+        }
+}
     /**
      * 
      */

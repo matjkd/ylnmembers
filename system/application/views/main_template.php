@@ -5,7 +5,7 @@
 <input type="hidden" id="baseurl" value="<?=base_url()?>"/>
 <div id="header">
 	<div id="header_inner">
-		<div id="logo"><img src="<?=base_url()?>images/laworld_logo.png" width=250px height=63px></div>
+		<div id="logo"><img src="<?=base_url()?>images/logo2.png"  height=63px></div>
         <div id="top_menu"><?php $this->load->view('global/menutop'); ?>	
 		</div>
     </div>
